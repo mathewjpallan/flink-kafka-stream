@@ -20,16 +20,20 @@ object StreamingJob extends BaseStreaming {
 
     //Creating the kafka consumer and kafka producer with configurations
     val kafkaConsumer = createStreamConsumer(config.getString(jobName + ".input.topic"), config.getString(jobName + ".groupId"))
-    kafkaConsumer.setStartFromEarliest()
+    //kafkaConsumer.setStartFromEarliest()
     val kafkaProducer = createStreamProducer(config.getString(jobName + ".output.success.topic"))
 
     //Attaching the kafka consumer as a source. The data stream object represents the stream of events from the source.
-    val dataStream: DataStream[KafkaMsg] = env.addSource(kafkaConsumer)
-    //Simple map function to lowercase the data in the stream
-    val lowerCaseDs: DataStream[KafkaMsg] = dataStream.map(data => KafkaMsg("", data.value.toLowerCase()))
+    val dataStream: DataStream[KafkaMsg] = env.addSource(kafkaConsumer).name("rawdata")
+
+    /* Simple map function to lowercase the data in the stream. This can be used in place of the
+       process function if there is no state/timer involved */
+    //val lowerCaseDs: DataStream[KafkaMsg] = dataStream.flatMap(data => data.value.split(" ")).map(data => KafkaMsg("", data.toLowerCase()))
+
+    val lowerCaseDs: DataStream[KafkaMsg] = dataStream.process(new CaseHandlerProcessFunction).name("tolowercase")
 
     //Attaching the kafka producer as a sink
-    lowerCaseDs.addSink(kafkaProducer)
+    lowerCaseDs.addSink(kafkaProducer).name("tovalid")
 
     env.execute(jobName)
   }

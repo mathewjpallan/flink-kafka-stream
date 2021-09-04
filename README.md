@@ -14,7 +14,7 @@ Trying a flink streaming job
     bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 6 --topic valid
     bin/kafka-topics.sh --list --bootstrap-server localhost:9092 //This is to see that the topics have been created
 ```
-4. Download and unzip flink 1.9.1
+4. Download and unzip flink 1.13.1
 
 ## Running the code
 1. Clone this repo and _**cd**_ to the cloned folder
@@ -36,7 +36,8 @@ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic valid --
 
 ## Understanding the source code
 **BaseStreaming** has the simple boilerplate code for the Kafka serializer and de-serializer.  
-**StreamingJob** has the simple boilerplate code for a flink job. 
+**StreamingJob** has the simple boilerplate code for a flink job.
+**CaseHandlerProcessFunction** is a simple process function that splits the incoming data by space and to lowercase
 **application.conf** has the input and output topic names that can be configured. It defaults to raw (input topic) and valid (output topic) along with other configuration
 
 
