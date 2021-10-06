@@ -13,6 +13,8 @@ Trying a flink streaming job
     bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 6 --topic raw
     bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 6 --topic valid
     bin/kafka-topics.sh --list --bootstrap-server localhost:9092 //This is to see that the topics have been created
+    
+    //Use the following command to delete a topic bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic raw
 ```
 4. Download and unzip flink 1.13.1
 
