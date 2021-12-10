@@ -8,7 +8,7 @@ import org.apache.flink.util.Collector
 
 class CaseHandlerProcessFunction extends ProcessFunction[KafkaMsg, KafkaMsg]{
 
-  private var eventCounter: Counter = null
+  private var eventCounter: Counter = _
 
   override def processElement(i: KafkaMsg, context: ProcessFunction[KafkaMsg, KafkaMsg]#Context, collector: Collector[KafkaMsg]): Unit = {
       eventCounter.inc()

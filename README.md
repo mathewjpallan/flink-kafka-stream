@@ -3,10 +3,10 @@ Trying a flink streaming job
 
 ## Pre-requisites
 1. Install jdk 8
-2. Download and unzip Kafka 2.2 and run the following commands after _**cd**_ to the kafka install directory
+2. Download and unzip Kafka 2.4 and run the following commands after _**cd**_ to the kafka install directory
 ```
     bin/zookeeper-server-start.sh config/zookeeper.properties
-    bin/kafka-server-start.sh config/server.properties. 
+    bin/kafka-server-start.sh config/server.properties 
 ```
 3. Create 2 topics in Kafka using the following commands 
 ```
@@ -15,6 +15,9 @@ Trying a flink streaming job
     bin/kafka-topics.sh --list --bootstrap-server localhost:9092 //This is to see that the topics have been created
     
     //Use the following command to delete a topic bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic raw
+    
+    //User the following command to get the current offset for a topic
+    bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic raw
 ```
 4. Download and unzip flink 1.13.1
 
